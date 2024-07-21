@@ -10,6 +10,7 @@ const allItems = [
   {id: 'pear', value: '🍐 pear'},
 ]
 
+ // We're gonna take the items array (the items displayed on the front end.) look through the allItems array and find the one that isn't present on the page and add it to the page.
 function App() {
   const [items, setItems] = React.useState(allItems)
 
@@ -19,18 +20,17 @@ function App() {
   }
 
   function removeItem(item) {
-    setItems(items.filter(i => i.id !== item.id))
+    setItems(items.filter(i => i.id !== item.id)) // Make a new array out of all the items whose id doesn't equal the one you just clicked. Aka remove an item.
   }
 
   return (
     <div className="keys">
-      <button disabled={items.length >= allItems.length} onClick={addItem}>
+      <button disabled={items.length >= allItems.length} onClick={addItem}>  {/* Disable the add item button when the amount of items on the page is greater than or equal to the amount available in the array.*/}
         add item
       </button>
       <ul>
         {items.map(item => (
-          // 🐨 add a key prop to the <li> below. Set it to item.id
-          <li>
+          <li key={item.id}> {/* Helps react keep track of what list item it's changing. Having an id is preferable because the key needs to match the list item. Don't use the index, use unique identifiers*/}
             <button onClick={() => removeItem(item)}>remove</button>{' '}
             <label htmlFor={`${item.id}-input`}>{item.value}</label>{' '}
             <input id={`${item.id}-input`} defaultValue={item.value} />
